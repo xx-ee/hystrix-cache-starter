@@ -44,4 +44,4 @@ public String getNickname(long userId) {
     return result;
 }
 ```
-> 以上保证了不用userId请求异常时，返回对应的userId所对应的兜底缓存数据，保证服务的高可用性
+> 以上保证了不同userId请求异常时，返回对应的userId所对应的兜底缓存数据，保证服务的高可用性
