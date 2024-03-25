@@ -13,7 +13,7 @@
 
 hystrix-cache-starter中间件提供了解决这些问题的方案
 
-hystrix-cache-starter中间环境：
+hystrix-cache-starter环境：
 * JDK 21
 * SpringBoot 3.2.3
 * [JetCache](https://github.com/alibaba/jetcache/wiki/)
@@ -22,7 +22,7 @@ hystrix-cache-starter中间环境：
 
 # 1、基于本地缓存/二级缓存的服务降级机制
 ## 1.1 背景
-hystrix提供的降级机制，只能写死固定的返回，或者需要特殊定制返回特定的返回值，对业务代码的侵入性很大。而基于缓存的降级机制，可以在触发熔断降级时，该中间件可以做到返回熔断前最后一次请求成功的兜底数据，尽最大可能保证服务的可用性。尤其是在Feed流的场景下，如果服务异常，Feed流极容易导致白屏不可用。
+hystrix提供的降级机制，只能写死固定的返回，或者需要特殊定制返回特定的返回值，对业务代码的侵入性很大。而基于缓存的降级机制，可以在触发熔断降级时，该中间件可以做到返回熔断前最后一次请求成功的兜底数据，尽最大可能保证服务的可用性，对业务代码侵入性极小。例如在Feed流的场景下，如果服务异常，Feed流极容易导致白屏不可用。
 ## 1.2 实现方式
 自定义注解@HystrixCmd+AOP+[JetCache](https://github.com/alibaba/jetcache/wiki/)缓存框架
 * 兜底数据记录/更新时机：每次请求外部接口成功后进行记录
