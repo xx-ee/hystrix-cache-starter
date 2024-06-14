@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.xx-ee</groupId>
-    <artifactId>hystrix-with-cache-starter</artifactId>
+    <artifactId>hystrix-cache-starter</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
