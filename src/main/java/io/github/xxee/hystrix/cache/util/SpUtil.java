@@ -1,4 +1,4 @@
-package xd.hystrix.cache.util;
+package io.github.xxee.hystrix.cache.util;
 
 //import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.DefaultParameterNameDiscoverer;

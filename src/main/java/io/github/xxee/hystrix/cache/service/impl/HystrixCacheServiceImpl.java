@@ -1,8 +1,8 @@
-package xd.hystrix.cache.service.impl;
+package io.github.xxee.hystrix.cache.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alicp.jetcache.Cache;
-import xd.hystrix.cache.service.HystrixCacheService;
+import io.github.xxee.hystrix.cache.service.HystrixCacheService;
 
 /**
  * Created by xiedong

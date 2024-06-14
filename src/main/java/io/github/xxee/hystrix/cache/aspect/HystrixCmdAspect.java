@@ -1,4 +1,4 @@
-package xd.hystrix.cache.aspect;
+package io.github.xxee.hystrix.cache.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -7,9 +7,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import xd.hystrix.cache.annotation.HystrixCmd;
-import xd.hystrix.cache.cmd.DoHystrixCmd;
-import xd.hystrix.cache.service.HystrixCacheService;
+import io.github.xxee.hystrix.cache.annotation.HystrixCmd;
+import io.github.xxee.hystrix.cache.cmd.DoHystrixCmd;
+import io.github.xxee.hystrix.cache.service.HystrixCacheService;
 
 import java.lang.reflect.Method;
 
@@ -25,7 +25,7 @@ public class HystrixCmdAspect {
         this.hystrixCacheService = hystrixCacheService;
     }
 
-    @Pointcut("@annotation(xd.hystrix.cache.annotation.HystrixCmd)")
+    @Pointcut("@annotation(io.github.xxee.hystrix.cache.annotation.HystrixCmd)")
     public void aopPoint() {
     }
 

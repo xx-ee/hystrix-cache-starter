@@ -1,4 +1,4 @@
-package xd.hystrix.cache.service;
+package io.github.xxee.hystrix.cache.service;
 
 /**
  * Created by xiedong

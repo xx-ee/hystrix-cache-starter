@@ -1,4 +1,4 @@
-package xd.hystrix.cache.annotation;
+package io.github.xxee.hystrix.cache.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

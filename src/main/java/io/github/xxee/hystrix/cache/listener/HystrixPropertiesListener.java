@@ -1,4 +1,4 @@
-package xd.hystrix.cache.listener;
+package io.github.xxee.hystrix.cache.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;

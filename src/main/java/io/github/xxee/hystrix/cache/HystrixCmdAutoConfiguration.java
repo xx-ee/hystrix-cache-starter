@@ -1,4 +1,4 @@
-package xd.hystrix.cache;
+package io.github.xxee.hystrix.cache;
 
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
@@ -16,11 +16,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xd.hystrix.cache.annotation.HystrixCmd;
-import xd.hystrix.cache.aspect.HystrixCmdAspect;
-import xd.hystrix.cache.listener.HystrixPropertiesListener;
-import xd.hystrix.cache.service.HystrixCacheService;
-import xd.hystrix.cache.service.impl.HystrixCacheServiceImpl;
+import io.github.xxee.hystrix.cache.annotation.HystrixCmd;
+import io.github.xxee.hystrix.cache.aspect.HystrixCmdAspect;
+import io.github.xxee.hystrix.cache.listener.HystrixPropertiesListener;
+import io.github.xxee.hystrix.cache.service.HystrixCacheService;
+import io.github.xxee.hystrix.cache.service.impl.HystrixCacheServiceImpl;
 
 import java.time.Duration;
 
@@ -34,7 +34,7 @@ import java.time.Duration;
 })
 @ConditionalOnBean(CacheManager.class)
 @Slf4j
-public class DoHystrixAutoConfiguration {
+public class HystrixCmdAutoConfiguration {
     public static final String HystrixCache = "hystrixCache";
 
     @Bean

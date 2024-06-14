@@ -1,4 +1,4 @@
-package xd.hystrix.cache.listener;
+package io.github.xxee.hystrix.cache.listener;
 
 import lombok.Getter;
 import lombok.Setter;
