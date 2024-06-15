@@ -28,7 +28,56 @@ hystrix提供的降级机制，只能写死固定的返回，或者需要特殊�
 * 兜底数据记录/更新时机：每次请求外部接口成功后进行记录
 * 兜底数据缓存时长：24h，可配置化，可容忍依赖服务的最大崩溃时长
 * 兜底数据启用时机：熔断降级时启用
-## 1、3 使用说明
+## 1.3 使用说明
+### 1.3.1 引入依赖
+```xml
+        <dependency>
+            <groupId>io.github.xx-ee</groupId>
+            <artifactId>hystrix-cache-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+```
+### 1.3.2 启动配置
+```java
+@SpringBootApplication
+
+@EnableHystrixCmd  // 启用hystrix-cache注解
+@EnableMethodCache(basePackages = "xxd.**") // 使用jetcache
+@EnableCreateCacheAnnotation // deprecated in jetcache 2.7, can be removed if @CreateCache is not used
+public class HystrixAppApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(HystrixAppApplication.class, args);
+    }
+
+}
+```
+### 1.3.3 application.yml配置
+```yaml
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: caffeine #other choose：caffeine
+      keyConvertor: fastjson #other choose：fastjson/jackson
+      limit: 100
+#  remote:
+#    default:
+#      type: redis
+#      keyConvertor: fastjson2 #other choose：fastjson/jackson
+#      broadcastChannel: projectA
+#      valueEncoder: java #other choose：kryo/kryo5
+#      valueDecoder: java #other choose：kryo/kryo5
+#      poolConfig:
+#        minIdle: 5
+#        maxIdle: 20
+#        maxTotal: 50
+#      host: ${redis.host}
+
+```
+### 1.3.1 使用
+
 ```java
  @HystrixCmd(
          //与hystrix groupKey一致
