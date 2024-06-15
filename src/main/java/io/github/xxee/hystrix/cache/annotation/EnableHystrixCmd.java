@@ -1,5 +1,7 @@
 package io.github.xxee.hystrix.cache.annotation;
 
+import com.alicp.jetcache.anno.config.CommonConfiguration;
+import com.alicp.jetcache.anno.field.CreateCacheAnnotationBeanPostProcessor;
 import io.github.xxee.hystrix.cache.HystrixCmdAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
@@ -14,6 +16,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @Import({HystrixCmdAutoConfiguration.class})
+//@Import({CommonConfiguration.class, CreateCacheAnnotationBeanPostProcessor.class})
 public @interface EnableHystrixCmd {
 
 }

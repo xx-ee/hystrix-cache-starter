@@ -2,6 +2,7 @@ package io.github.xxee.hystrix.cache;
 
 import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.CacheManager;
+import com.alicp.jetcache.SimpleCacheManager;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.template.QuickConfig;
 import com.netflix.hystrix.Hystrix;
@@ -32,7 +33,7 @@ import java.time.Duration;
 @ConditionalOnClass(value = {
         HystrixCmd.class
 })
-@ConditionalOnBean(CacheManager.class)
+//@ConditionalOnBean(CacheManager.class)
 @Slf4j
 public class HystrixCmdAutoConfiguration {
     public static final String HystrixCache = "hystrixCache";
@@ -43,6 +44,7 @@ public class HystrixCmdAutoConfiguration {
                                                    Cache<String, Object> hystrixCache) {
         return new HystrixCacheServiceImpl(hystrixCache);
     }
+
 
     @Bean(name = HystrixCache, destroyMethod = "close")
     @ConditionalOnMissingBean
