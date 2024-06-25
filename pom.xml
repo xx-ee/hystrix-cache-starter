@@ -6,7 +6,7 @@
 
     <groupId>io.github.xx-ee</groupId>
     <artifactId>hystrix-cache-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>hystrix-cache-starter</name>
     <description>hystrix-cache-starter</description>

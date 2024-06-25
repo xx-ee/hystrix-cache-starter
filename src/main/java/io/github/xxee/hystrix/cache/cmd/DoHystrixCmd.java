@@ -83,32 +83,38 @@ public class DoHystrixCmd extends HystrixCommand<Object> {
             if (this.hystrixCmd.enableCache() && this.hystrixCmd.useCacheFirst()) {
                 Object result = this.hystrixCacheService.getFallbackData(this.cacheKey);
                 if (result != null) {
-                    log.info("hystrix-run use cache first...");
+                    log.info("hystrixCmd-run,use cache first,not call outer");
                     return JSON.parseObject(result.toString(), method.getReturnType());
                 }
             }
             //
+            log.info("hystrixCmd-run,start call outer");
             Object result = jp.proceed();
 
-            //记录fallbackData
-            this.hystrixCacheService.putFallBackData(this.cacheKey, result);
+            if (this.hystrixCmd.enableCache()) {
+                //记录fallbackData
+                this.hystrixCacheService.putFallBackData(this.cacheKey, result);
+            }
             return result;
         } catch (Throwable e) {
-            log.error("run-error", e);
+            log.error("hystrixCmd-error", e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     protected Object getFallback() {
-        log.info("getFallback...key:{}", this.cacheKey);
+        log.info("hystrixCmd-getFallback...key:{},start", this.cacheKey);
         if (this.hystrixCmd.enableCache() && this.hystrixCmd.useCacheAfter()) {
             Object s = this.hystrixCacheService.getFallbackData(this.cacheKey);
             if (s != null) {
                 return JSON.parseObject(s.toString(), method.getReturnType());
             }
         }
-        return null;
+//        if (log.isDebugEnabled()) {
+        log.info("hystrixCmd-getFallback...key:{},cache fallback not enable or cache expire,will return default", this.cacheKey);
+//        }
+        return JSON.parseObject(hystrixCmd.fallbackDefaultJson(), method.getReturnType());
     }
 }
 

@@ -15,12 +15,13 @@ public @interface HystrixCmd {
     String cachePrefix() default "default";
 
     String cacheKey() default "";
-
     boolean enableCache() default true;
 
     boolean useCacheFirst() default false;
 
     boolean useCacheAfter() default false;
+
+    String fallbackDefaultJson() default "";
 
     /**
      * The command group key is used for grouping together commands such as for reporting,
