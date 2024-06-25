@@ -25,8 +25,6 @@ public @interface HystrixCmd {
     /**
      * The command group key is used for grouping together commands such as for reporting,
      * alerting, dashboards or team/library ownership.
-     * <p/>
-     * default => the runtime class name of annotated method
      *
      * @return group key
      */
@@ -34,16 +32,8 @@ public @interface HystrixCmd {
 
     /**
      * Hystrix command key.
-     * <p/>
-     * default => the name of annotated method. for example:
-     * <code>
-     * ...
      *
-     * @return command key
-     * @HystrixCommand public User getUserById(...)
-     * ...
-     * the command name will be: 'getUserById'
-     * </code>
+     * @return Hystrix command key.
      */
     String commandKey() default "";
 
@@ -51,7 +41,7 @@ public @interface HystrixCmd {
      * The thread-pool key is used to represent a
      * HystrixThreadPool for monitoring, metrics publishing, caching and other such uses.
      *
-     * @return thread pool key
+     * @return thread-pool key
      */
     String threadPoolKey() default "";
 }
