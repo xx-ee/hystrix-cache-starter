@@ -6,10 +6,10 @@
 
     <groupId>io.github.xx-ee</groupId>
     <artifactId>hystrix-cache-starter</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <name>hystrix-cache-starter</name>
-    <description>hystrix-cache-starter</description>
+    <description>hystrix-cache-starter，基于hystrix框架，增强缓存的使用</description>
     <url>https://github.com/xx-ee/hystrix-cache-starter</url>
 
     <licenses>
