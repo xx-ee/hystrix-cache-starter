@@ -108,6 +108,7 @@ public class DoHystrixCmd extends HystrixCommand<Object> {
         if (this.hystrixCmd.enableCache() && this.hystrixCmd.useCacheAfter()) {
             Object s = this.hystrixCacheService.getFallbackData(this.cacheKey);
             if (s != null) {
+                log.info("hystrixCmd-getFallback...key:{},cache fallback enable and cache find,will return", this.cacheKey);
                 return JSON.parseObject(s.toString(), method.getReturnType());
             }
         }
