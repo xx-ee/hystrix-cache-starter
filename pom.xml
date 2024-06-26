@@ -188,6 +188,7 @@
                 <configuration>
                     <publishingServerId>xd</publishingServerId>
                     <tokenAuth>true</tokenAuth>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
             <!--   source源码插件 -->
