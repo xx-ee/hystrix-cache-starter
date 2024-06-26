@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -38,6 +39,12 @@ import java.time.Duration;
 public class HystrixCmdAutoConfiguration {
     public static final String HystrixCache = "hystrixCache";
 
+    @Value("${hystrix.cache.expire.time:30}")
+    private int hystrixCacheExpireTime;
+
+    @Value("${hystrix.cache.localLimit:50}")
+    private int hystrixCacheLocalLimit;
+
     @Bean
     @ConditionalOnMissingBean
     public HystrixCacheService hystrixCacheService(@Autowired @Qualifier(value = HystrixCache)
@@ -50,9 +57,9 @@ public class HystrixCmdAutoConfiguration {
     @ConditionalOnMissingBean
     public Cache<String, Object> getHystrixCache(@Autowired CacheManager cacheManager) {
         QuickConfig qc = QuickConfig.newBuilder(HystrixCache)
-                .expire(Duration.ofSeconds(5))
+                .expire(Duration.ofSeconds(hystrixCacheExpireTime))
                 .cacheType(CacheType.LOCAL) // two level cache
-                .localLimit(50)
+                .localLimit(hystrixCacheLocalLimit)
                 .syncLocal(true) // invalidate local cache in all jvm process after update
                 .build();
         return cacheManager.getOrCreateCache(qc);
