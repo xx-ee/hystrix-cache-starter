@@ -1,5 +1,6 @@
 package io.github.xxee.hystrix.cache.aspect;
 
+import io.github.xxee.hystrix.cache.prometheus.PrometheusMetricReportor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -20,9 +21,11 @@ import java.lang.reflect.Method;
 @Aspect
 public class HystrixCmdAspect {
     private final HystrixCacheService hystrixCacheService;
+    private final PrometheusMetricReportor prometheusMetricReportor;
 
-    public HystrixCmdAspect(HystrixCacheService hystrixCacheService) {
+    public HystrixCmdAspect(HystrixCacheService hystrixCacheService, PrometheusMetricReportor prometheusMetricReportor) {
         this.hystrixCacheService = hystrixCacheService;
+        this.prometheusMetricReportor = prometheusMetricReportor;
     }
 
     @Pointcut("@annotation(io.github.xxee.hystrix.cache.annotation.HystrixCmd)")
@@ -31,7 +34,7 @@ public class HystrixCmdAspect {
 
     @Around("aopPoint() && @annotation(doGovern)")
     public Object doRouter(ProceedingJoinPoint jp, HystrixCmd doGovern) throws Throwable {
-        DoHystrixCmd doHystrixCommand = new DoHystrixCmd(doGovern, hystrixCacheService);
+        DoHystrixCmd doHystrixCommand = new DoHystrixCmd(doGovern, hystrixCacheService, prometheusMetricReportor);
         return doHystrixCommand.access(jp, getMethod(jp), jp.getArgs());
     }
 

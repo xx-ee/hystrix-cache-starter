@@ -7,6 +7,7 @@ import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.template.QuickConfig;
 import com.netflix.hystrix.Hystrix;
 import com.soundcloud.prometheus.hystrix.HystrixPrometheusMetricsPublisher;
+import io.github.xxee.hystrix.cache.prometheus.PrometheusMetricReportor;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
@@ -67,8 +68,9 @@ public class HystrixCmdAutoConfiguration {
 
 
     @Bean
-    public HystrixCmdAspect doHystrixAspect(@Autowired HystrixCacheService hystrixCacheService) {
-        return new HystrixCmdAspect(hystrixCacheService);
+    public HystrixCmdAspect doHystrixAspect(@Autowired HystrixCacheService hystrixCacheService,
+                                            @Autowired PrometheusMetricReportor prometheusMetricReportor) {
+        return new HystrixCmdAspect(hystrixCacheService, prometheusMetricReportor);
     }
 
     @Bean
@@ -92,6 +94,11 @@ public class HystrixCmdAutoConfiguration {
     })
     public HystrixPrometheus hystrixPrometheus(@Autowired PrometheusMeterRegistry prometheusMeterRegistry) {
         return new HystrixPrometheus(prometheusMeterRegistry);
+    }
+
+    @Bean
+    public PrometheusMetricReportor prometheusMetricReportor() {
+        return new PrometheusMetricReportor();
     }
 
 

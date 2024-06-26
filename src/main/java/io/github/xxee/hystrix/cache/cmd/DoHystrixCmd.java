@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.expression.ExpressionUtil;
 import com.alibaba.fastjson.JSON;
 import com.netflix.hystrix.*;
+import io.github.xxee.hystrix.cache.prometheus.PrometheusMetricReportor;
 import io.github.xxee.hystrix.cache.util.SpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,11 +22,12 @@ import java.util.Objects;
 public class DoHystrixCmd extends HystrixCommand<Object> {
     private ProceedingJoinPoint jp;
     private Method method;
-    private HystrixCmd hystrixCmd;
-    private HystrixCacheService hystrixCacheService;
+    private final HystrixCmd hystrixCmd;
+    private final HystrixCacheService hystrixCacheService;
+    private final PrometheusMetricReportor prometheusMetricReportor;
     private String cacheKey;
 
-    public DoHystrixCmd(HystrixCmd hystrixCmd, HystrixCacheService hystrixCacheService) {
+    public DoHystrixCmd(HystrixCmd hystrixCmd, HystrixCacheService hystrixCacheService, PrometheusMetricReportor prometheusMetricReportor) {
         /*********************************************************************************************
          * 置HystrixCommand的属性
          * GroupKey：            该命令属于哪一个组，可以帮助我们更好的组织命令。
@@ -57,6 +59,7 @@ public class DoHystrixCmd extends HystrixCommand<Object> {
         );
         this.hystrixCmd = hystrixCmd;
         this.hystrixCacheService = hystrixCacheService;
+        this.prometheusMetricReportor = prometheusMetricReportor;
     }
 
     public Object access(ProceedingJoinPoint jp, Method method, Object[] args) {
@@ -84,8 +87,10 @@ public class DoHystrixCmd extends HystrixCommand<Object> {
                 Object result = this.hystrixCacheService.getFallbackData(this.cacheKey);
                 if (result != null) {
                     log.info("hystrixCmd-run,use cache first,not call outer");
+                    prometheusMetricReportor.cacheSuccess(this.hystrixCmd.groupKey(), this.hystrixCmd.commandKey());
                     return JSON.parseObject(result.toString(), method.getReturnType());
                 }
+                prometheusMetricReportor.cacheFail(this.hystrixCmd.groupKey(), this.hystrixCmd.commandKey());
             }
             //
             log.info("hystrixCmd-run,start call outer");
@@ -109,8 +114,10 @@ public class DoHystrixCmd extends HystrixCommand<Object> {
             Object s = this.hystrixCacheService.getFallbackData(this.cacheKey);
             if (s != null) {
                 log.info("hystrixCmd-getFallback...key:{},cache fallback enable and cache find,will return", this.cacheKey);
+                prometheusMetricReportor.fallBackSuccess(this.hystrixCmd.groupKey(), this.hystrixCmd.commandKey());
                 return JSON.parseObject(s.toString(), method.getReturnType());
             }
+            prometheusMetricReportor.fallBackFail(this.hystrixCmd.groupKey(), this.hystrixCmd.commandKey());
         }
 //        if (log.isDebugEnabled()) {
         log.info("hystrixCmd-getFallback...key:{},cache fallback not enable or cache expire,will return default", this.cacheKey);
