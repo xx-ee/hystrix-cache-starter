@@ -3,6 +3,7 @@ package io.github.xxee.hystrix.cache.annotation;
 import com.alicp.jetcache.anno.config.CommonConfiguration;
 import com.alicp.jetcache.anno.field.CreateCacheAnnotationBeanPostProcessor;
 import io.github.xxee.hystrix.cache.HystrixCmdAutoConfiguration;
+import org.springframework.cloud.netflix.hystrix.HystrixCircuitBreakerConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -15,7 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import({HystrixCmdAutoConfiguration.class})
+@Import({HystrixCircuitBreakerConfiguration.class, HystrixCmdAutoConfiguration.class,})
 //@Import({CommonConfiguration.class, CreateCacheAnnotationBeanPostProcessor.class})
 public @interface EnableHystrixCmd {
 

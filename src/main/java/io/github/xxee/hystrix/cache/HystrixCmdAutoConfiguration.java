@@ -68,12 +68,14 @@ public class HystrixCmdAutoConfiguration {
 
 
     @Bean
+    @ConditionalOnMissingBean
     public HystrixCmdAspect doHystrixAspect(@Autowired HystrixCacheService hystrixCacheService,
                                             @Autowired PrometheusMetricReportor prometheusMetricReportor) {
         return new HystrixCmdAspect(hystrixCacheService, prometheusMetricReportor);
     }
 
-    @Bean
+/*    @Bean
+    @ConditionalOnMissingBean
     public HystrixShutdownHook hystrixShutdownHook() {
         return new HystrixShutdownHook();
     }
@@ -85,18 +87,19 @@ public class HystrixCmdAutoConfiguration {
         public void destroy() throws Exception {
             Hystrix.reset();
         }
-    }
+    }*/
 
     @Bean
     @ConditionalOnClass(value = {
             PrometheusMeterRegistry.class,
             HystrixCmd.class
     })
-    public HystrixPrometheus hystrixPrometheus(@Autowired PrometheusMeterRegistry prometheusMeterRegistry) {
+    public HystrixPrometheus hystrixPrometheus(@Autowired(required = false) PrometheusMeterRegistry prometheusMeterRegistry) {
         return new HystrixPrometheus(prometheusMeterRegistry);
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public PrometheusMetricReportor prometheusMetricReportor() {
         return new PrometheusMetricReportor();
     }
@@ -113,6 +116,7 @@ public class HystrixCmdAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public HystrixPropertiesListener hystrixPropertiesListener() {
         return new HystrixPropertiesListener();
     }
