@@ -278,8 +278,8 @@
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.5</version>
                 <configuration>
-<!--                    <executable>D:\Softs\GnuPG\bin\gpg.exe</executable>-->
-                    <executable>/usr/local/bin/gpg</executable>
+                    <executable>D:\Softs\GnuPG\bin\gpg.exe</executable>
+<!--                    <executable>/usr/local/bin/gpg</executable>-->
                     <keyname>xxee</keyname>
                 </configuration>
                 <executions>
