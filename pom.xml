@@ -6,7 +6,7 @@
 
     <groupId>io.github.xx-ee</groupId>
     <artifactId>hystrix-cache-starter</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 
     <name>hystrix-cache-starter</name>
     <description>hystrix-cache-starter，基于hystrix框架，增强缓存的使用</description>
@@ -56,6 +56,9 @@
         <jedis-client.version>4.3.1</jedis-client.version>
         <hystrix.version>1.5.18</hystrix.version>
         <hutool-all.version>5.8.26</hutool-all.version>
+
+        <apollo-client.version>1.9.2</apollo-client.version>
+        <spring-cloud-starter-hystrix.version>1.4.7.RELEASE</spring-cloud-starter-hystrix.version>
     </properties>
 
 
@@ -167,7 +170,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
-            <version>1.4.7.RELEASE</version>
+            <version>${spring-cloud-starter-hystrix.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spring-cloud-starter</artifactId>
@@ -208,7 +211,13 @@
             </exclusions>
         </dependency>
 
-
+        <!-- https://mvnrepository.com/artifact/com.ctrip.framework.apollo/apollo-client -->
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>${apollo-client.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 
